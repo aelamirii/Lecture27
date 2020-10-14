@@ -1,0 +1,144 @@
+[MUSIC] In the previous lecture, we saw a couple of properties of the
+directive definition object or the DDO. We saw how to use the template and
+the template vro properties. In this lecture we're going to see
+another DDO property called restrict. The restrict property tells AngularJS
+compiler where to detect your custom directive. Should it try to detect it as
+an attribute to a different element? Or should it look for an element with
+a name of your registered directive? If you don't specify
+the restrict property on the ddo Angular will default its value to be AE. The A stands for attribute, and
+E stands for element that means that angular will look for your directive as
+being either an attribute or an element. So that's the default, if you want it
+to restrict the directive to be only an attribute to a different element,
+you would specify an A as the value for the restrict property. It is best practice to restrict
+your directive to an attribute if that directive is extending some
+behavior of some other element. For example, think of ng-repeat,
+it doesn't have any content of its own. It's just extending the behavior of any element that you place that
+particular ng-repeat attribute on. If you wanted your directive to be an
+element only, you would specify an E for the value of the property. The best practice to restrict
+a directive to be an element if that directive is defining a component
+with some associated template. Think of the previous example we
+have that have the list item on it, it has some content to it,
+it has a template to it. So it will only make sense that
+template and that content and with some behaviour would be an element. It's a best practice not to use
+the class on CSS-based directives, so obviously don't restrict
+your ddo to that either. Now if you restrict a directive
+to be a one type and then you use that directive
+in a different fashion. Angular will not match that directive and
+will simply ignore it like anything else in your HTML
+then it's not supposed to process. So, if you specify the directive
+to be an element and then use it as an attribute,
+Angular will ignore it completely. Okay, let's jump to the code editor and
+see these concepts in action. Okay, I'm back in my Code Editor and
+I'm located in the lecture 27 folder, which is inside fullstack-course5
+examples folder. And here, I have the exactly same app
+that we had in the previous lecture, the ShoppingListDirectiveApp. And as you remember we created
+a couple of custom directives, one of which was list item directive. And the list item directive basically
+just corresponds to this list item.html which is its template and
+it's just an LI with yet another actually custom
+directive inside of it. And a button that we can click on,
+If we take a look back in our HTML, we see that the list item is
+being used as an element. Now, if we'll look at app.js, we'll see the list item does not
+specify the restrict property. So, that means that we could use it as
+either an attribute or an element but let's go ahead and specify the restrict
+property here and, we'll call it AE. So, for attribute and an element, so we
+can use it either or and, we're going to go ahead and save that, and we're going to
+make sure not to forget the comma, here. Now, if we go to our browser,
+we can see that we can still add whatever we can want to add into the list and
+it will work just fine. Going back to the code editor,
+let's go ahead and change our list item. At least in the first controller,
+in the first shopping list, let's change this to an attribute
+instead since it's allowed to be one. Let's go ahead and erase this part and
+we'll erase this part. Conveniently, it shortens to li and
+we'll go ahead and list list-item as an attribute
+on the li element. Let's go ahead and save that, and
+let's go back to the browser and see what happens if we
+add some cookies in here. And four bags of cookies and we'll
+click add well that's a little weird, okay, notice we have this one. And two kind of looks like it the same
+time so if we keep adding it it'll keep looking like there is two
+numbers in our ordered list. Well list go ahead then crack open
+the code here the dom element and see what's really going on the side. Now if we take a look this is our
+ordered list and this is our li and if we open our li right here you see
+there's another li inside of that. Well, how did that get here? And that li has the list item, it looks
+like we're really two nested li's in here. Well, the reason this is happening is
+because when we listed the list-item on this li, the ListItem, as you remember,
+let's take a look at the ddo. The ListItem list,
+the ListItem.html as its template. And the ListItem.html already has an li in
+it, so that's not really going to work. In other words, for this to actually work, we would actually have to remove
+this li out of this template. As go ahead and
+do that now just to test it out, save it. And now if we go back to our browser,
+let's close the Chrome developer tools. The browser sync should have refreshed
+it and let's do this again, cookies, four bags of cookies, we'll click Add. And three bags of cookies and then chips
+five bags of chips and we'll click Add. And it's still working just fine, so
+if we again open up our Elements here and take a look,
+we see that an ordered list has an li, and inside of that li is the list description,
+and the button, and so on here. All the code that we expected to be there,
+and we're using an attribute, instead of an element,
+in order to produce that. Now, if we close our
+Chrome developer tools, and try the same thing
+on the Shopping List #2. Now, remember, Shopping List #2,
+let's actually go ahead and take a look at the code real quick, shopping list 2 has
+the list item, being used as an element. So, if we go to our browser and
+start adding here, cookies, four bags and click egg. And it says four bags of cookies but for some reason we don't see
+a number next to it. So, if we keep adding stuff it's
+not really looking like there is the proper formatting going on. Let's go ahead and crack open that code
+and see what actually is going on here. And you see here our ordered list and
+we see our list item. And then we see list description, so it what seems like is going on is
+that we don't have a li element. And, obviously,
+we don't have a li element because we removed it from our template right here,
+so point number one is. Whether you restrict something to
+be an attribute or an element. The associated template that comes
+with their particular directive has to make sense within
+the context to the HTML, okay. So far if we look in
+the app.js we restricted the ListItem to be either an attribute or
+an element. Well let's try to restrict it to be
+only an attribute, let's go ahead and save that and
+let's go back to the browser. Refresh by browser sync and will again add
+some cookies in here 5 bags of cookies. Notice the number of bags keeps
+going up and here it is, that works. We can do it a few more times and if we
+look here, inspect the elements here, this should be just like before. We have an item that has a list item
+as an attribute which produces this whole template In the middle or
+in the content of the LI element. If we go to our shopping list number 2
+however, and put in some stuff here, 6 bags of cookies and add that,
+you see, nothing is going on. If we click this a couple of more times,
+This shows up, so the functionality is actually working. But nothing is showing up, right here. Let's take a look at,
+at maybe just somewhere here, as to what's going on in our gum. So, we can see that, so
+we see the list2, let's open that up. That's the list2,
+that's the h1, the shopping. And, that's the input elements and
+there's our ol and if we take a look at, here ordered list still has these
+items and they're repeating but they're not showing up at all,
+why is that? Well, that's simple, the reason they're not showing up
+is there's nothing inside of them. And the reason there's no content
+inside of them is because is compile a completely ignored List that
+item.It doesn't even know what that is. It doesn't recognize that, and the reason it doesn't recognize it
+is because we sued it as an element, when we in fact restricted that particular
+directive to be only an attribute. But as we said in the lecture something
+that has a template is probably much more suited to be an element than an attribute,
+so let's go ahead and change that here. And we'll save that, and
+we'll go back to our index the HTML and the second list, the second shopping list is going to using as that an element while
+the first will leave it as an attribute. However, this is really not going to
+work because we're sharing the same list item in HTML and it's for
+this directive to work is an element. We actually need to put the LI's back,
+let's go ahead and do that now. because we don't have an LI without this
+because it's not being an attribute. So we now go back to the browser,
+the second list should work just fine, Cookies, 4 bags and
+we'll add that again, again. It's working just fine except the three
+reached the maximum three items but if we go here and try to add stuff,
+it will not work. You could see the numbers
+are showing up but if you look inside,
+let's inspect the inside, it's an li. And we have a list-item as an attribute,
+but the content of li is empty. And the reason the content of li is empty
+is because AngularJS compiler cannot even find the fact that there's a custom
+directive as an attribute sitting on a li. Because we told AngularJS that the only
+directive that list-item can be is an element and since this is an attribute,
+it is simply ignored. So let's summarize. The DDO's restrict property determines
+what AngularJS compiler should look for to detect your custom directive. Using directive as a different
+restrict type than defined will cause the compiler
+to simply ignore it. And therefore, your tag with custom
+behavior will simply not work. Best practice number one is use E for element when directive has content
+along with possible behavior. Also the best practice is to use A for
+attribute when your directive has no content and only extends
+the behavior of your host element. Finally, another best practice
+we talked about is that, while it's possible to use class and
+comment directives. That's only for
+older browser compatibility, and is really not used anymore. Therefore, just avoid defining your
+custom directives as a class or comment.
